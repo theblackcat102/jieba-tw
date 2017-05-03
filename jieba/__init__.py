@@ -7,12 +7,13 @@ import os
 import sys
 import time
 import logging
-import marshal
+import pickle
 import tempfile
 import threading
 from math import log
 from hashlib import md5
 from ._compat import *
+from ._dict import CaseInsensitiveDict
 from . import finalseg
 
 if os.name == 'nt':
@@ -33,6 +34,8 @@ default_logger.addHandler(log_console)
 DICT_WRITING = {}
 
 pool = None
+
+case_sensitive = False
 
 re_userdict = re.compile('^(.+?)( [0-9]+)?( [a-z]+)?$', re.U)
 
@@ -57,7 +60,8 @@ class Tokenizer(object):
             self.dictionary = dictionary
         else:
             self.dictionary = _get_abs_path(dictionary)
-        self.FREQ = {}
+
+        self.FREQ = self._create_dict()
         self.total = 0
         self.user_word_tag_tab = {}
         self.initialized = False
@@ -67,8 +71,14 @@ class Tokenizer(object):
     def __repr__(self):
         return '<Tokenizer dictionary=%r>' % self.dictionary
 
+    def _create_dict(self):
+        if case_sensitive:
+            return {}
+        else:
+            return CaseInsensitiveDict()
+
     def gen_pfdict(self, f):
-        lfreq = {}
+        lfreq = self._create_dict()
         ltotal = 0
         f_name = resolve_filename(f)
         for lineno, line in enumerate(f, 1):
@@ -131,7 +141,7 @@ class Tokenizer(object):
                     "Loading model from cache %s" % cache_file)
                 try:
                     with open(cache_file, 'rb') as cf:
-                        self.FREQ, self.total = marshal.load(cf)
+                        self.FREQ, self.total = pickle.load(cf)
                     load_from_cache_fail = False
                 except Exception:
                     load_from_cache_fail = True
@@ -147,7 +157,7 @@ class Tokenizer(object):
                         # prevent moving across different filesystems
                         fd, fpath = tempfile.mkstemp(dir=tmpdir)
                         with os.fdopen(fd, 'wb') as temp_cache_file:
-                            marshal.dump(
+                            pickle.dump(
                                 (self.FREQ, self.total), temp_cache_file)
                         _replace_file(fpath, cache_file)
                     except Exception:
