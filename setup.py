@@ -43,8 +43,9 @@ GitHub: https://github.com/fxsjy/jieba
 """
 
 setup(name='jieba',
-      version='0.39',
+      version='0.39.1',
       description='Traditional Chinese Words Segementation Utilities',
+      description='Chinese Words Segementation Utilities',
       long_description=LONGDOC,
       author='Tzing',
       author_email='tzingshih@gmail.com',
