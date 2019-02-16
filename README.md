@@ -1,6 +1,6 @@
-# jieba-tw
+# jieba-hant
 
-結巴(jieba)斷詞台灣繁體 特化版本
+結巴(jieba)斷詞台灣繁體 特化版本, 為了防止版本相衝突，更改了套件名稱
 
 
 ## 原理
@@ -11,7 +11,7 @@
 ## 安裝
 
 ```sh
-pip install git+https://github.com/APCLab/jieba-tw.git
+pip install jieba-hant
 ```
 
 ## 使用
@@ -19,20 +19,20 @@ pip install git+https://github.com/APCLab/jieba-tw.git
 本專案特化部分如下
 
 ```python
-import jieba
+import jieba_hant
 
-jieba.case_sensitive = True # 可控制對於詞彙中的英文部分是否為case sensitive, 預設False
+jieba_hant.case_sensitive = True # 可控制對於詞彙中的英文部分是否為case sensitive, 預設False
 ```
 
 ## 斷詞
 
 ```python
-import jieba
+import jieba_hant
 
 #如果您的電腦同時要使用兩個版本的jieba，請自訂cache檔名，避免兩個cache互相蓋住對方
 #jieba.dt.cache_file = 'jieba.cache.new'
 
-seg_list = jieba.cut("新竹的交通大學在新竹的大學路上")
+seg_list = jieba_hant.cut("新竹的交通大學在新竹的大學路上")
 print(" / ".join(seg_list))
 # 新竹 / 的 / 交通 / 大學 / 在 / 新竹 / 的 / 大學路 / 上 /
 
