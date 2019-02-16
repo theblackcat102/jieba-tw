@@ -42,13 +42,13 @@ GitHub: https://github.com/fxsjy/jieba
 
 """
 
-setup(name='jieba',
+setup(name='jieba_hant',
       version='0.39.1',
       description='Traditional Chinese Words Segementation Utilities',
       long_description=LONGDOC,
-      author='Tzing',
-      author_email='tzingshih@gmail.com',
-      url='https://github.com/apclab/jieba-tw',
+      author='theblackcat102,fxsjy,ldkrsi',
+      author_email='zhirui09400@gmail.com',
+      url='https://github.com/theblackcat102/jieba-tw',
       license="MIT",
       classifiers=[
         'Intended Audience :: Developers',
@@ -68,7 +68,7 @@ setup(name='jieba',
         'Topic :: Text Processing :: Linguistic',
       ],
       keywords='NLP,tokenizing,Chinese word segementation',
-      packages=['jieba'],
-      package_dir={'jieba':'jieba'},
-      package_data={'jieba':['*.*','finalseg/*','analyse/*','posseg/*']}
+      packages=['jieba_hant'],
+      package_dir={'jieba_hant':'jieba_hant'},
+      package_data={'jieba_hant':['*.*','finalseg/*','analyse/*','posseg/*']}
 )
